@@ -15,4 +15,8 @@ export class RestaurantsService {
   restaurants(): Observable<RestaurantModel[]> {
     return this.http.get<RestaurantModel[]>(`${MEAT_API}/restaurants`);
   }
+
+  restaurantById(id: string): Observable<RestaurantModel> {
+    return this.http.get<RestaurantModel>(`${MEAT_API}/restaurants/${id}`);
+  }
 }
