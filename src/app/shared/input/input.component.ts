@@ -16,7 +16,7 @@ export class InputComponent implements OnInit, AfterContentInit {
   @Input() errorMessage: string;
   input: any;
 
-  @ContentChild(NgModel) model: NgModel;
+  @ContentChild(NgModel, { static: true }) model: NgModel;
 
   constructor() {}
 
@@ -29,5 +29,13 @@ export class InputComponent implements OnInit, AfterContentInit {
         'Esse componente precisa ser usado com uma diretiva ngModel.'
       );
     }
+  }
+
+  hasSuccess(): boolean {
+    return this.input.valid && (this.input.dirty || this.input.touched);
+  }
+
+  hasError(): boolean {
+    return this.input.invalid && (this.input.dirty || this.input.touched);
   }
 }

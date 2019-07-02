@@ -19,14 +19,26 @@ export class ShoppingCarService {
     let foundItem = this.items.find(mItem => mItem.menuItem.id === item.id);
 
     if (foundItem) {
-      foundItem.quantity++;
+      // foundItem.quantity++;
+      this.increaseQty(foundItem);
     } else {
       this.items.push(new CarItemModel(item));
     }
   }
 
+  increaseQty(item: CarItemModel) {
+    item.quantity++;
+  }
+
   removeItem(item: CarItemModel) {
     this.items.splice(this.items.indexOf(item), 1);
+  }
+
+  decreaseQty(item: CarItemModel) {
+    item.quantity--;
+    if (item.quantity === 0) {
+      this.removeItem(item);
+    }
   }
 
   total(): number {

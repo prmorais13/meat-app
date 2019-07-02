@@ -20,6 +20,8 @@ import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
 import { OrderComponent } from './order/order.component';
 import { InputComponent } from './shared/input/input.component';
+import { RadioComponent } from './shared/radio/radio.component';
+import { OrderItemsComponent } from './order/order-items/order-items.component';
 
 registerLocaleData(localeBr);
 
@@ -37,7 +39,9 @@ registerLocaleData(localeBr);
     MenuItemComponent,
     ReviewsComponent,
     OrderComponent,
-    InputComponent
+    InputComponent,
+    RadioComponent,
+    OrderItemsComponent
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
