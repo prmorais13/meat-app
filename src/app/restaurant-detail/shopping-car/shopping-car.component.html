@@ -17,16 +17,20 @@
         <table class="table">
           <tbody>
             <tr *ngFor="let item of items()">
-              <th style="width:60%">({{item.quantity}}X) {{item.menuItem.name}}:</th>
-              <td class="text-right">{{item.value() | currency: 'BRL'}}</td>
+              <th style="width:60%">
+                ({{ item.quantity }}X) {{ item.menuItem.name }}:
+              </th>
+              <td class="text-right">{{ item.value() | currency: 'BRL' }}</td>
               <td class="text-right">
-                <a (click)="removeItem(item)" class="btn btn-sm danger"><i class="fa fa-remove"></i></a>
+                <a (click)="removeItem(item)" class="btn btn-sm danger"
+                  ><i class="fa fa-remove"></i
+                ></a>
               </td>
             </tr>
 
             <tr>
               <th>Total:</th>
-              <td class="text-right">{{total() | currency: 'BRL'}}</td>
+              <td class="text-right">{{ total() | currency: 'BRL' }}</td>
             </tr>
           </tbody>
         </table>
@@ -36,8 +40,12 @@
 
   <div *ngIf="items().length" class=" box-footer">
     <div class="pull-right">
-      <button (click)="clear()" type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Limpar</button>
-      <a [routerLink]="['/order']" class="btn btn-success"><i class="fa fa-credit-card"></i> Fechar Pedido</a>
+      <button (click)="clear()" type="button" class="btn btn-danger">
+        <i class="fa fa-trash"></i> Limpar
+      </button>
+      <a [routerLink]="['/order']" class="btn btn-success"
+        ><i class="fa fa-credit-card"></i> Fechar Pedido</a
+      >
     </div>
   </div>
 </div>
