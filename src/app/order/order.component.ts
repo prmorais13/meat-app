@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 
 import { OrderService } from './order.service';
 
@@ -31,24 +36,45 @@ export class OrderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.orderForm = this.fb.group({
-      name: this.fb.control('', [Validators.required, Validators.minLength(5)]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
-      emailConfirmation: this.fb.control('', [
-        Validators.required,
-        Validators.email
-      ]),
-      address: this.fb.control('', [
-        Validators.required,
-        Validators.minLength(5)
-      ]),
-      number: this.fb.control('', [
-        Validators.required,
-        Validators.pattern('^[0-9]*$')
-      ]),
-      optionalAddress: this.fb.control(''),
-      paymentOption: this.fb.control('', [Validators.required])
-    });
+    this.orderForm = this.fb.group(
+      {
+        name: this.fb.control('', [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
+        email: this.fb.control('', [Validators.required, Validators.email]),
+        emailConfirmation: this.fb.control('', [
+          Validators.required,
+          Validators.email
+        ]),
+        address: this.fb.control('', [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
+        number: this.fb.control('', [
+          Validators.required,
+          Validators.pattern('^[0-9]*$')
+        ]),
+        optionalAddress: this.fb.control(''),
+        paymentOption: this.fb.control('', [Validators.required])
+      },
+      { validators: OrderComponent.equalsTo }
+    );
+  }
+
+  static equalsTo(group: AbstractControl): { [key: string]: boolean } {
+    const email = group.get('email');
+    const emailConfirmation = group.get('emailConfirmation');
+
+    if (!email || !emailConfirmation) {
+      return undefined;
+    }
+
+    if (email.value !== emailConfirmation.value) {
+      return { emailIsNotMatch: true };
+    }
+
+    return undefined;
   }
 
   itemsValue(): number {
