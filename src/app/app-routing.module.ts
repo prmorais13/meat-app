@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+// import { AboutComponent } from './about/about.component';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
 import { ReviewsComponent } from './restaurant-detail/reviews/reviews.component';
@@ -22,13 +22,21 @@ const routes: Routes = [
       { path: 'reviews', component: ReviewsComponent }
     ]
   },
-  { path: 'order', component: OrderComponent },
+  {
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then(m => m.OrderModule)
+  },
   { path: 'order-summary', component: OrderSummaryComponent },
-  { path: 'about', component: AboutComponent }
+  {
+    path: 'about',
+    loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
