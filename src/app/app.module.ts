@@ -1,7 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import {
+  registerLocaleData,
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
+
 //import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 //Módulos
 import { SharedModule } from './shared/shared.module';
 
@@ -18,7 +25,6 @@ import { ShoppingCarComponent } from './restaurant-detail/shopping-car/shopping-
 import { MenuItemComponent } from './restaurant-detail/menu-item/menu-item.component';
 import { ReviewsComponent } from './restaurant-detail/reviews/reviews.component';
 
-import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
 //import { OrderComponent } from './order/order.component';
 //import { AboutComponent } from './about/about.component';
@@ -28,6 +34,7 @@ import localeBr from '@angular/common/locales/pt';
 //import { OrderItemsComponent } from './order/order-items/order-items.component';
 //import { DeliveryCostsComponent } from './order/delivery-costs/delivery-costs.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 registerLocaleData(localeBr);
 
@@ -50,7 +57,8 @@ registerLocaleData(localeBr);
     //RatingComponent,
     //OrderItemsComponent,
     //DeliveryCostsComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +68,10 @@ registerLocaleData(localeBr);
     //ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
