@@ -4,6 +4,7 @@ var jsonServer = require("json-server");
 var fs = require("fs");
 var https = require("https");
 var auth_1 = require("./auth");
+var autoz_1 = require("./autoz");
 var server = jsonServer.create();
 var router = jsonServer.router('db.json');
 var middlewares = jsonServer.defaults();
@@ -14,6 +15,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 //Middleware para login
 server.post('/login', auth_1.handleAuthentication);
+server.use('/orders', autoz_1.handleAuthorization);
 // Use default router
 server.use(router);
 var options = {
