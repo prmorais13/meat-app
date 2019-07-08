@@ -35,6 +35,7 @@ import localeBr from '@angular/common/locales/pt';
 //import { DeliveryCostsComponent } from './order/delivery-costs/delivery-costs.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LoginComponent } from './security/login/login.component';
 
 registerLocaleData(localeBr);
 
@@ -58,7 +59,8 @@ registerLocaleData(localeBr);
     //OrderItemsComponent,
     //DeliveryCostsComponent,
     OrderSummaryComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,8 @@ export const handleAuthentication = (req: Request, res: Response) => {
       { sub: dbUser.email, iss: 'meat-api' },
       apiConfig.secret
     );
-    res.json({ dbUser, successToken: token });
+    const { email, name } = dbUser;
+    res.json({ email, name, successToken: token });
   } else {
     res.status(403).json({ message: 'Dados inválidos!' });
   }
