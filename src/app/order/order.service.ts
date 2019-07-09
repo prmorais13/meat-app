@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MEAT_API } from 'app/app-api';
 
 import { ShoppingCarService } from '../restaurant-detail/shopping-car/shopping-car.service';
+import { LoginService } from 'app/security/login/login.service';
 
 import { CarItemModel } from '../restaurant-detail/shopping-car/car-item-model';
 import { OrderModel } from './order-model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,8 @@ import { OrderModel } from './order-model';
 export class OrderService {
   constructor(
     private carService: ShoppingCarService,
-    private http: HttpClient
+    private http: HttpClient,
+    private loginService: LoginService
   ) {}
 
   itemsValue(): number {
@@ -42,9 +45,19 @@ export class OrderService {
     this.carService.clear();
   }
 
-  checkOrder(order: OrderModel): Observable<OrderModel> {
+  checkOrder(order: OrderModel): Observable<string> {
     // const headers = new Headers();
     // headers.append('ContentType', 'application/json')
-    return this.http.post<OrderModel>(`${MEAT_API}/orders`, order);
+    let headers = new HttpHeaders();
+    if (this.loginService.isLoggedIn()) {
+      console.log(`Esse é o token ${this.loginService.userLogado.accessToken}`);
+      // headers = headers.set(
+      //   'Authorization',
+      //   `Bearer ${this.loginService.userLogado.accessToken}`
+      // );
+    }
+    return this.http
+      .post<OrderModel>(`${MEAT_API}/orders`, order)
+      .pipe(map(order => order.id));
   }
 }

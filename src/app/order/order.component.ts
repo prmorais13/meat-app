@@ -102,7 +102,7 @@ export class OrderComponent implements OnInit {
       (item: CarItemModel) => new OrderItem(item.quantity, item.menuItem.id)
     );
     this.orderService.checkOrder(order).subscribe(
-      (order: OrderModel) => {
+      order => {
         this.router.navigate(['/order-summary']);
         // console.log(`Compra concluída: ${JSON.stringify(order.id)}`);
         this.orderService.clear();
