@@ -13,7 +13,7 @@ export const handleAuthentication = (req: Request, res: Response) => {
       apiConfig.secret
     );
     const { email, name } = dbUser;
-    res.json({ email, name, successToken: token });
+    res.json({ email, name, accessToken: token });
   } else {
     res.status(403).json({ message: 'Dados inválidos!' });
   }

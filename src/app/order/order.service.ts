@@ -45,19 +45,17 @@ export class OrderService {
     this.carService.clear();
   }
 
-  checkOrder(order: OrderModel): Observable<string> {
+  checkOrder(order: OrderModel): Observable<OrderModel> {
     // const headers = new Headers();
     // headers.append('ContentType', 'application/json')
     let headers = new HttpHeaders();
     if (this.loginService.isLoggedIn()) {
-      console.log(`Esse é o token ${this.loginService.userLogado.accessToken}`);
-      // headers = headers.set(
-      //   'Authorization',
-      //   `Bearer ${this.loginService.userLogado.accessToken}`
-      // );
+      headers = headers.set(
+        'Authorization',
+        `Bearer ${this.loginService.userLogado.accessToken}`
+      );
     }
-    return this.http
-      .post<OrderModel>(`${MEAT_API}/orders`, order)
-      .pipe(map(order => order.id));
+    return this.http.post<OrderModel>(`${MEAT_API}/orders`, order, { headers });
+    //.pipe(map(order => order.id));
   }
 }

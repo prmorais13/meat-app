@@ -24,7 +24,6 @@ export class LoginService {
       .pipe(
         tap(data => {
           this.userLogado = data;
-          console.log(`Token: ${JSON.stringify(this.userLogado)}`);
         })
       );
   }
