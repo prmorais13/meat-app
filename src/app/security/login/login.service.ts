@@ -1,9 +1,11 @@
-import { UserModel } from './user-model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Router, NavigationEnd } from '@angular/router';
 
+import { Observable } from 'rxjs';
+import { tap, filter } from 'rxjs/operators';
+
+import { UserModel } from './user-model';
 import { MEAT_API } from 'app/app-api';
 
 @Injectable({
@@ -11,11 +13,24 @@ import { MEAT_API } from 'app/app-api';
 })
 export class LoginService {
   userLogado: UserModel;
+  lastUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {
+    router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: NavigationEnd) => (this.lastUrl = e.url));
+  }
 
   isLoggedIn(): boolean {
     return this.userLogado !== undefined;
+  }
+
+  logout() {
+    this.userLogado = undefined;
+  }
+
+  handleLogin(path: string = this.lastUrl) {
+    this.router.navigate(['/login', btoa(path)]);
   }
 
   login(email: string, password: string): Observable<UserModel> {
