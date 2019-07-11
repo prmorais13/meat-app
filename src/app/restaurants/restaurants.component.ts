@@ -17,8 +17,8 @@ export class RestaurantsComponent implements OnInit {
     this.restaurantsService.restaurants().subscribe(
       dados => {
         this.restaurants = dados;
-      },
-      error => console.error('Erro ao acessar restaurantes', error)
+      } // ,
+      // error => console.error('Erro ao acessar restaurantes', error)
     );
   }
 }

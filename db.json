@@ -419,22 +419,6 @@
         }
       ],
       "id": 3
-    },
-    {
-      "name": "Paulo Roberto",
-      "email": "prmorais1302@gmail.com",
-      "emailConfirmation": "prmorais1302@gmail.com",
-      "address": "Rua Parque Paraúna",
-      "number": "79",
-      "optionalAddress": "",
-      "paymentOption": "MON",
-      "orderItems": [
-        {
-          "quantity": 1,
-          "menuId": "cup-cake"
-        }
-      ],
-      "id": 4
     }
   ]
 }

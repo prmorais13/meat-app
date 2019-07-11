@@ -17,9 +17,9 @@ import { map } from 'rxjs/operators';
 export class OrderService {
   constructor(
     private carService: ShoppingCarService,
-    private http: HttpClient // ,
-  ) // private loginService: LoginService
-  {}
+    private http: HttpClient,
+    private loginService: LoginService
+  ) {}
 
   itemsValue(): number {
     return this.carService.total();
@@ -48,15 +48,14 @@ export class OrderService {
   checkOrder(order: OrderModel): Observable<OrderModel> {
     // const headers = new Headers();
     // headers.append('ContentType', 'application/json')
-    // let headers = new HttpHeaders();
-    // if (this.loginService.isLoggedIn()) {
-    //   headers = headers.set(
-    //     'Authorization',
-    //     `Bearer ${this.loginService.userLogado.accessToken}`
-    //   );
-    // }
-    return this.http.post<OrderModel>(`${MEAT_API}/orders`, order);
-    // return this.http.post<OrderModel>(`${MEAT_API}/orders`, order, { headers });
+    let headers = new HttpHeaders();
+    if (this.loginService.isLoggedIn()) {
+      headers = headers.set(
+        'Authorization',
+        `Bearer ${this.loginService.userLogado.accessToken}`
+      );
+    }
+    return this.http.post<OrderModel>(`${MEAT_API}/orders`, order, { headers });
     //.pipe(map(order => order.id));
   }
 }

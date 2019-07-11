@@ -12,7 +12,6 @@ import { OrderService } from './order.service';
 import { RadioOptionModel } from '../shared/radio/radio-option-model';
 import { CarItemModel } from '../restaurant-detail/shopping-car/car-item-model';
 import { OrderModel, OrderItem } from './order-model';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mt-order',
@@ -74,6 +73,7 @@ export class OrderComponent implements OnInit {
     if (email.value !== emailConfirmation.value) {
       return { emailIsNotMatch: true };
     }
+
     return undefined;
   }
 
@@ -101,21 +101,14 @@ export class OrderComponent implements OnInit {
     order.orderItems = this.carItems().map(
       (item: CarItemModel) => new OrderItem(item.quantity, item.menuItem.id)
     );
-    this.orderService
-      .checkOrder(order)
-      // .pipe(
-      //   tap(order => {
-      //     this.orderId = order.id;
-      //   })
-      // )
-      .subscribe(
-        order => {
-          this.orderId = order.id;
-          this.router.navigate(['/order-summary']);
-          this.orderService.clear();
-        },
-        error => console.error('Erro ao salvar pedido!', error)
-      );
+    this.orderService.checkOrder(order).subscribe(
+      order => {
+        this.router.navigate(['/order-summary']);
+        this.orderId = order.id;
+        this.orderService.clear();
+      },
+      error => console.error('Erro ao salvar pedido!', error)
+    );
   }
 
   isOrderCompleted(): boolean {

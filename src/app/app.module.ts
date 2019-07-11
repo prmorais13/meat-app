@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {
   registerLocaleData,
   LocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -37,6 +38,7 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './security/login/login.component';
 import { UserDetailComponent } from './header/user-detail/user-detail.component';
+import { ApplicationErrorHandle } from './error-handle';
 
 registerLocaleData(localeBr);
 
@@ -67,6 +69,7 @@ registerLocaleData(localeBr);
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     SharedModule,
     //FormsModule,
     //ReactiveFormsModule,
@@ -74,7 +77,8 @@ registerLocaleData(localeBr);
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: ErrorHandler, useClass: ApplicationErrorHandle }
   ],
   bootstrap: [AppComponent]
 })

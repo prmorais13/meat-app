@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { LoginService } from './login.service';
+import { NotificationService } from 'app/shared/messages/notification.service';
 
 @Component({
   selector: 'mt-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private ns: NotificationService
   ) {}
 
   ngOnInit() {
@@ -29,12 +31,22 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    // this.loginService
+    //   .login(this.loginForm.value.email, this.loginForm.value.password)
+    //   .subscribe(
+    //     user => console.log(`Bem vindo(a) ${user.name}`),
+    //     error => console.error(error.error.message),
+    //     () => this.router.navigate([atob(this.navigateTo)])
+    //   );
     this.loginService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe(
-        user => console.log(`Bem vindo(a) ${user.name}`),
-        error => console.error(error.error.message),
-        () => this.router.navigate([atob(this.navigateTo)])
+        user => {
+          this.ns.notify(`Bem vindo(a) ${user.name}`);
+          this.router.navigate([atob(this.navigateTo)]);
+        } //,
+        // error => this.ns.notify('Dados Inválidos!'),
+        // () => this.router.navigate([atob(this.navigateTo)])
       );
   }
 }
