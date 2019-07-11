@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {
-  registerLocaleData,
   LocationStrategy,
+  registerLocaleData,
   HashLocationStrategy
 } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,6 +27,7 @@ import { MenuItemComponent } from './restaurant-detail/menu-item/menu-item.compo
 import { ReviewsComponent } from './restaurant-detail/reviews/reviews.component';
 
 import localeBr from '@angular/common/locales/pt';
+registerLocaleData(localeBr, 'pt');
 //import { OrderComponent } from './order/order.component';
 //import { AboutComponent } from './about/about.component';
 //import { InputComponent } from './shared/input/input.component';
@@ -39,8 +40,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './security/login/login.component';
 import { UserDetailComponent } from './header/user-detail/user-detail.component';
 import { ApplicationErrorHandle } from './error-handle';
-
-registerLocaleData(localeBr);
 
 @NgModule({
   declarations: [
@@ -77,7 +76,7 @@ registerLocaleData(localeBr);
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: ErrorHandler, useClass: ApplicationErrorHandle }
   ],
   bootstrap: [AppComponent]

@@ -4,7 +4,8 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  AbstractControl
+  AbstractControl,
+  FormControl
 } from '@angular/forms';
 
 import { OrderService } from './order.service';
@@ -36,29 +37,45 @@ export class OrderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.createForm();
+    // this.orderForm = this.fb.group(
+    //   {
+    //     name: new FormControl('', {
+    //       validators: [Validators.required, Validators.minLength(5)],
+    //       updateOn: 'blur'
+    //     }),
+    //     email: this.fb.control('', [Validators.required, Validators.email]),
+    //     emailConfirmation: this.fb.control('', [
+    //       Validators.required,
+    //       Validators.email
+    //     ]),
+    //     address: this.fb.control('', [
+    //       Validators.required,
+    //       Validators.minLength(5)
+    //     ]),
+    //     number: this.fb.control('', [
+    //       Validators.required,
+    //       Validators.pattern('^[0-9]*$')
+    //     ]),
+    //     optionalAddress: this.fb.control(''),
+    //     paymentOption: this.fb.control('', [Validators.required])
+    //   },
+    //   { validators: OrderComponent.equalsTo }
+    // );
+  }
+
+  createForm() {
     this.orderForm = this.fb.group(
       {
-        name: this.fb.control('', [
-          Validators.required,
-          Validators.minLength(5)
-        ]),
-        email: this.fb.control('', [Validators.required, Validators.email]),
-        emailConfirmation: this.fb.control('', [
-          Validators.required,
-          Validators.email
-        ]),
-        address: this.fb.control('', [
-          Validators.required,
-          Validators.minLength(5)
-        ]),
-        number: this.fb.control('', [
-          Validators.required,
-          Validators.pattern('^[0-9]*$')
-        ]),
-        optionalAddress: this.fb.control(''),
-        paymentOption: this.fb.control('', [Validators.required])
+        name: ['', [Validators.required, Validators.minLength(5)]],
+        email: ['', [Validators.required, Validators.email]],
+        emailConfirmation: ['', [Validators.required, Validators.email]],
+        address: ['', [Validators.required, Validators.minLength(5)]],
+        number: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+        optionalAddress: [''],
+        paymentOption: ['', [Validators.required]]
       },
-      { validators: OrderComponent.equalsTo }
+      { validators: [OrderComponent.equalsTo], updateOn: 'blur' }
     );
   }
 

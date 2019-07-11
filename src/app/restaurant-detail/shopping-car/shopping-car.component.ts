@@ -3,7 +3,8 @@ import { ShoppingCarService } from './shopping-car.service';
 
 @Component({
   selector: 'mt-shopping-car',
-  templateUrl: './shopping-car.component.html'
+  templateUrl: './shopping-car.component.html',
+  preserveWhitespaces: true
 })
 export class ShoppingCarComponent implements OnInit {
   constructor(private shoppingCarService: ShoppingCarService) {}
