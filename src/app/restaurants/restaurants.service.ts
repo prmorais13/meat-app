@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { RestaurantModel } from './restaurant/restaurant-model';
@@ -13,8 +13,14 @@ import { MEAT_API } from 'app/app-api';
 export class RestaurantsService {
   constructor(private http: HttpClient) {}
 
-  restaurants(): Observable<RestaurantModel[]> {
-    return this.http.get<RestaurantModel[]>(`${MEAT_API}/restaurants`);
+  restaurants(search?: string): Observable<RestaurantModel[]> {
+    let params: HttpParams = undefined;
+    if (search) {
+      params = new HttpParams().append('q', search);
+    }
+    return this.http.get<RestaurantModel[]>(`${MEAT_API}/restaurants`, {
+      params
+    });
   }
 
   restaurantById(id: string): Observable<RestaurantModel> {
